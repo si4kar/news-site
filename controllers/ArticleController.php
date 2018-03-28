@@ -1,13 +1,13 @@
 <?php
 
-class ProductController
+class ArticleController
 {
     public function actionView($productId)
     {
         $categories = [];
         $categories = Category::getCategoriesList();
 
-        $product = Product::getProductById($productId);
+        $product = Article::getProductById($productId);
 
 
         require_once (ROOT.'/views/product/view.php');

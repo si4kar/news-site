@@ -18,18 +18,16 @@ class AdminCategoryController extends AdminBase
 
         if (isset($_POST['submit'])) {
             $options['name'] = $_POST['name'];
-            $options['sort_order'] = $_POST['sort_order'];
-            $options['status'] = $_POST['status'];
 
             $error = false;
-            if (!isset($options['name']) || empty($options['name']) || empty($options['sort_order']) ||  empty($options['status'])) {
+            if (!isset($options['name']) || empty($options['name']) )  {
                 $error = true;
                 Session::setFlashError("Заполните поля");
             }
             if ($error == false) {
                 Category::createCategory($options);
 
-                Router::redirect('/admin/category/');
+                Router::redirect('/admin/category');
             }
         }
         require_once (ROOT.'/views/admin_category/create.php');
@@ -60,8 +58,6 @@ class AdminCategoryController extends AdminBase
 
         if (isset($_POST['submit'])) {
             $options['name'] = $_POST['name'];
-            $options['sort_order'] = $_POST['sort_order'];
-            $options['status'] = $_POST['status'];
             Category::updateCategoryById($id, $options);
 
             Router::redirect('/admin/category');

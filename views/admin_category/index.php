@@ -5,17 +5,12 @@
         <div class="container">
             <div class="row">
 
-
-                <br/>
-
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
                         <li><a href="/admin">Админпанель</a></li>
                         <li class="active">Управление категориями</li>
                     </ol>
                 </div>
-
-
 
                 <a href="/admin/category/create" class="btn btn-default back"><i class="fa fa-plus"></i> Добавить категорию</a>
 
@@ -33,19 +28,15 @@
                     <tr>
                         <th>ID категории</th>
                         <th>Название категории</th>
-                        <th>Порядковый номер</th>
-                        <th>Статус</th>
                         <th></th>
                         <th></th>
                     </tr>
                     <?php foreach ($categoriesList as $category): ?>
                         <tr>
-                            <td><?php echo $category['id']; ?></td>
-                            <td><?php echo $category['name']; ?></td>
-                            <td><?php echo $category['sort_order']; ?></td>
-                            <td><?php echo Category::getStatusText($category['status']); ?></td>
-                            <td><a href="/admin/category/update/<?=$category['id']?>" title="Редактировать"><i class="fa fa-pencil-square-o"></i></a></td>
-                            <td><a href="/admin/category/delete/<?=$category['id']?>" title="Удалить"><i class="fa fa-times"></i></a></td>
+                            <td><?=$category['id']?></td>
+                            <td><?=$category['name']?></td>
+                            <td><a href="/admin/category/update/<?=$category['id']?>"><i class="fa fa-pencil-square-o"></i>Редактировать</a></td>
+                            <td><a href="/admin/category/delete/<?=$category['id']?>"><i class="fa fa-times"></i>Удалить</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

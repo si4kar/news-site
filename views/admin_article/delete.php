@@ -1,4 +1,3 @@
-
 <?php include ROOT . '/views/layouts/header_admin.php'; ?>
 
 <section>
@@ -10,14 +9,16 @@
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
                     <li><a href="/admin">Админпанель</a></li>
-                    <li><a href="/admin/order">Управление заказами</a></li>
-                    <li class="active">Удаление заказа</li>
+                    <li><a href="/admin/article">Управление статьями</a></li>
+                    <li class="active">Удалить статью</li>
                 </ol>
             </div>
-            <h4>Удалить заказ #<?php echo $id; ?></h4>
 
 
-            <p>Вы действительно хотите удалить этот заказ?</p>
+            <h4>Удалить статью #<?=$id?></h4>
+
+
+            <p>Вы действительно хотите удалить эту статью?</p>
 
             <form method="post">
                 <input type="submit" name="back" value="Нет" />

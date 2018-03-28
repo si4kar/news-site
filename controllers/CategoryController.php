@@ -9,9 +9,9 @@ class CategoryController
         $categories = Category::getCategoriesList();
         $categories = Category::createTree($categories, 0);
 
-      //  $latestProducts = Product::getLatestProducts();
-        $productsList = Product::getProductsList();
-        $total = Product::getTotalProducts();
+      //  $latestProducts = Article::getLatestProducts();
+        $productsList = Article::getProductsList();
+        $total = Article::getTotalProducts();
         $pagination = new Pagination($total, $page, Category::SHOW_BY_DEFAULT, 'page-');
 
         require_once(ROOT.'/views/catalog/index.php');
@@ -24,10 +24,10 @@ class CategoryController
         $categories = Category::getCategoriesList();
 
         $categoryProducts = [];
-        $categoryProducts = Product::getProductsListByCategory($categoryId, $page);
+        $categoryProducts = Article::getProductsListByCategory($categoryId, $page);
 
-        $total = Product::getTotalProductsInCategory($categoryId);
-        $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
+        $total = Article::getTotalProductsInCategory($categoryId);
+        $pagination = new Pagination($total, $page, Article::SHOW_BY_DEFAULT, 'page-');
 
         require_once(ROOT.'/views/catalog/category.php');
         return true;

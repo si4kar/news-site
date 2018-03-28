@@ -31,7 +31,9 @@ class User
 
     public static function checkPassword($password)
     {
-        if(strlen($password >=6)) return true;
+        if(strlen($password) >=6) {
+            return true;
+        }
         Session::setFlashError("Password must be longer than 5 characters");
         return false;
     }
@@ -93,7 +95,7 @@ class User
 
         Session::set('userId', $userId);
         Session::set('login', $name);
-        Router::redirect('/catalog/');
+        Router::redirect('/');
     }
 
     public static function isGuest()

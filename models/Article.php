@@ -1,9 +1,9 @@
 <?php
 
 
-class Product
+class Article
 {
-    const SHOW_BY_DEFAULT = 6;
+    const SHOW_BY_DEFAULT = 5;
 
     public static function getLatestProducts($count = self::SHOW_BY_DEFAULT, $page =1)
     {
@@ -34,7 +34,7 @@ class Product
         return $productList;
     }
 
-    public static function getProductsListByCategory($categoryId = false, $page = 1)
+    public static function getArticleListByCategory($categoryId = false, $page = 1)
     {
         if($categoryId) {
 
@@ -42,36 +42,33 @@ class Product
             $offset = ($page-1) * self::SHOW_BY_DEFAULT;
             $db = Db::getConnection();
 
-            $products = [];
+            $articles = [];
 
-            $result = $db->query("SELECT id, name, price, is_new FROM product "
-                    . "WHERE status = '1' AND category_id = '$categoryId' "
-                    . "ORDER BY id ASC "
+            $result = $db->query("SELECT id, name FROM article "
+                    . "WHERE category_id = '$categoryId' "
                     . "LIMIT ".self::SHOW_BY_DEFAULT
                     . ' OFFSET '. $offset);
 
             $i =0;
 
             while ($row = $result->fetch()) {
-                $products[$i]['id'] = $row['id'];
-                $products[$i]['name'] = $row['name'];
+                $articles[$i]['id'] = $row['id'];
+                $articles[$i]['name'] = $row['name'];
                // $products[$i]['image'] = $row['image'];
-                $products[$i]['price'] = $row['price'];
-                $products[$i]['is_new'] = $row['is_new'];
                 $i++;
             }
-            return $products;
+            return $articles;
         }
     }
 
-    public static function getProductById($id)
+    public static function getArticleById($id)
     {
         $id = intval($id);
 
         if($id) {
             $db = Db::getConnection();
 
-            $result = $db->query("SELECT * FROM product WHERE id=" . $id);
+            $result = $db->query("SELECT * FROM article WHERE id=" . $id);
             $result->setFetchMode(PDO::FETCH_ASSOC);
 
             return $result->fetch();
@@ -79,7 +76,7 @@ class Product
         }
     }
 
-    public static function getTotalProductsInCategory($categoryId)
+/*    public static function getTotalProductsInCategory($categoryId)
     {
         $db = Db::getConnection();
 
@@ -91,9 +88,9 @@ class Product
         $row = $result->fetch();
 
         return $row['count'];
-    }
+    }*/
 
-    public static function getTotalProducts()
+/*    public static function getTotalProducts()
     {
         $db = Db::getConnection();
 
@@ -105,9 +102,9 @@ class Product
         $row = $result->fetch();
 
         return $row['count'];
-    }
+    }*/
 
-    public static function getProductsByIds($idsArray)
+/*    public static function getProductsByIds($idsArray)
     {
         $products = [];
 
@@ -133,9 +130,9 @@ class Product
         }
 
         return $products;
-    }
+    }*/
 
-    public static function getRecommendedProducts()
+   /* public static function getRecommendedProducts()
     {
         $db = Db::getConnection();
 
@@ -154,59 +151,51 @@ class Product
             $i++;
         }
         return $productsList;
-    }
+    }*/
 
-    public static function getProductsList()
+    public static function getArticlesList()
     {
         $db = Db::getConnection();
 
-        $result = $db->query('SELECT id, name, price, code, is_new FROM product ORDER BY id ASC');
-        $productsList = [];
+        $result = $db->query('SELECT id, name, is_new, description FROM article ORDER BY id ASC');
+        $articlesList = [];
         $i = 0;
 
         while ($row = $result->fetch()) {
-            $productsList[$i]['id'] = $row['id'];
-            $productsList[$i]['name'] = $row['name'];
-            $productsList[$i]['price'] = $row['price'];
-            $productsList[$i]['code'] = $row['code'];
-            $productsList[$i]['is_new'] = $row['is_new'];
+            $articlesList[$i]['id'] = $row['id'];
+            $articlesList[$i]['name'] = $row['name'];
+            $articlesList[$i]['is_new'] = $row['is_new'];
+            $articlesList[$i]['description'] = $row['description'];
             $i++;
         }
-        return $productsList;
+        return $articlesList;
     }
 
-    public static function deleteProductById($id)
+    public static function deleteArticleById($id)
     {
         $db = Db::getConnection();
 
-        $sql = "DELETE FROM product WHERE id = :id";
+        $sql = "DELETE FROM article WHERE id = :id";
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
 
         return $result->execute();
     }
 
-    public static function createProduct($options)
+    public static function createArticle($options)
     {
         $db  = Db::getConnection();
-        $sql = 'INSERT INTO product '
-            . '(name, code, price, category_id, brand, availability,'
-            . 'description, is_new, is_recommended, status)'
-            . 'VALUES '
-            . '(:name, :code, :price, :category_id, :brand, :availability,'
-            . ':description, :is_new, :is_recommended, :status)';
+        $sql = 'INSERT INTO article '
+            . '(name, category_id, analitic,'
+            . 'description, is_new)'
+            . 'VALUES (:name, :category_id, :analitic, :description, :is_new)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
-        $result->bindParam(':code', $options['code'], PDO::PARAM_STR);
-        $result->bindParam(':price', $options['price'], PDO::PARAM_STR);
         $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
-        $result->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
-        $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
+        $result->bindParam(':analitic', $options['analitic'], PDO::PARAM_INT);
         $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
         $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
-        $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
-        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
 
         if ($result->execute()) {
             Session::setFlash('OK');
@@ -216,35 +205,25 @@ class Product
         return 0;
     }
 
-    public static function updateProductById($id, $options)
+    public static function updateArticleById($id, $options)
     {
         $db  = Db::getConnection();
-        $sql = "UPDATE product
+        $sql = "UPDATE article
             SET 
                 name = :name, 
-                code = :code, 
-                price = :price, 
                 category_id = :category_id, 
-                brand = :brand, 
-                availability = :availability, 
                 description = :description, 
-                is_new = :is_new, 
-                is_recommended = :is_recommended, 
-                status = :status
+                analitic = :analitic, 
+                is_new = :is_new 
             WHERE id = :id";
 
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
-        $result->bindParam(':code', $options['code'], PDO::PARAM_STR);
-        $result->bindParam(':price', $options['price'], PDO::PARAM_STR);
         $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
-        $result->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
-        $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
         $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
+        $result->bindParam(':analitic', $options['analitic'], PDO::PARAM_INT);
         $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
-        $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
-        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
 
         if ($result->execute()) {
             Session::setFlash('OK');
@@ -258,7 +237,7 @@ class Product
     {
         $noImage = 'no-image.jpg';
 
-        $path = '/webroot/upload/images/products/';
+        $path = '/webroot/upload/images/article/';
         $pathToProductImage = $path . $id . '.jpg';
         if (file_exists($_SERVER['DOCUMENT_ROOT'].$pathToProductImage)) {
             return $pathToProductImage;

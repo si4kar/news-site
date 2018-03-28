@@ -1,21 +1,26 @@
+<?php include ROOT . '/views/layouts/header.php'; ?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-2">
+                <h2>Heading</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-8">
 
-    <title>News-site</title>
+                <?php foreach ($categories as $category): ?>
+                <h2><?=$category['name']?></h2>
+                    <?php $articles = Article::getArticleListByCategory($category['id']);?>
+                    <?php foreach ($articles as $article): ?>
+                    <p><a href=""><?=$article['name']?></a></p>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="/webroot/css/blog.css" rel="stylesheet">
-</head>
 
-<body>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
 
-<?php Category::getCategoriesList() ?>
 
-</body>
-</html>
+        </div>
+
+<?php include ROOT . '/views/layouts/footer.php'; ?>

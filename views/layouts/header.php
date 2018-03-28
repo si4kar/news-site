@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>T-shirt</title>
-    <!-- add bootstrap css file -->
+    <title>News-site</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/webroot/css/style.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/styleNav.css">
-    <link href="/webroot/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/webroot/css/carusel.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
@@ -19,11 +18,8 @@
             <div class="collapse navbar-collapse navbar-brand" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-4">
                     <li class="nav-item">
-                        <a href="/cart/index/"><i class="fa fa-shopping-cart"></i> Claim
-                            <?php if (Cart::countItems() != false) { ?>
-                                (<span id="cart-count"><?php echo Cart::countItems();?></span>)
-                            <?php } ?>
-                        </a>
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+
                     </li>
 
                     <?php if(Session::get('login') != null) { ?>
@@ -40,20 +36,22 @@
         <div class="container" id="secondNav">
             <ul class="navbar cf">
                 <li><a href="/">HOME</a></li>
-                <li><a href="/category/">COLLECTIONS</a>
+                <li><a href="/category/">Category</a>
                     <ul class="ulColor">
-                        <?php foreach (Category::createTreeForNav() as $category):?>
-                        <li><a href="/category/<?=$category['id']?>"><?=$category['name']?></a>
+                        <li>
+                            <a href="">Analitic</a>
+                        </li>
+                        <li><a href="">List</a>
                             <ul>
-                                <li><a href="/category/<?=$category['id']?>/1">BOYS</a></li>
-                                <li><a href="/category/<?=$category['id']?>/2">GIRLS</a></li>
+                                <li><a href="">SPORT</a></li>
+                                <li><a href="">FINANCE</a></li>
+                                <li><a href="">FASHION</a></li>
+                                <li><a href="">POLITIC</a></li>
                             </ul>
                         </li>
-                        <?php endforeach; ?>
                    </ul>
+
                 </li>
-                <li><a href="#">OUTLET</a></li>
-                <li><a href="#">STORE</a></li>
             </ul>
         </div>
     </div>

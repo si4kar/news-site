@@ -4,11 +4,11 @@ class SiteController
 {
     public function actionIndex()
     {
-       /* $categories = Category::getCategoriesList();
+        $categories = Category::getCategoriesList();
 
-        $latestProducts = Product::getLatestProducts();
+        //$latestProducts = Article::getLatestProducts();
 
-        $sliderProducts = Product::getRecommendedProducts();*/
+        //$sliderProducts = Article::getRecommendedProducts();
 
         require_once(ROOT.'/views/site/index.php');
         return true;

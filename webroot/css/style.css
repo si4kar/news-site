@@ -1,0 +1,134 @@
+#secondNav {
+    border-bottom: solid 1px;
+    justify-content: center;
+}
+.nav-link , .navbar-brand{
+    cursor: pointer;
+}
+.nav-link:hover{
+    background: #f4f4f4;
+    color: black;
+}
+.nav-link {
+    color: black;
+}
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
+
+.nav-item {
+    margin-right: 50px;
+    color: black !important;
+}
+
+.carousel-inner img {
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 80%;
+    height: 80%;
+}
+
+.carousel-inner {
+    text-align: center;
+}
+
+#secondNav {
+    padding-top: 30px;
+}
+
+#footer {
+    border-top: solid 1px;
+    text-align: right;
+}
+h2 {
+    text-align: center;
+}
+
+.mainH4 {
+    padding-top: 20px;
+    border-bottom: solid 1px;
+}
+.card {
+    border: none;
+    padding-bottom: 20px;
+}
+
+#checkLogin {
+    padding-top: 50px;
+}
+
+#loginBtn {
+    margin-top: 30px;
+}
+
+.form-signin input {
+    margin-top: 10px !important;
+}
+
+.contPagination {
+    position: relative;
+    height: 3em;
+}
+.contPagination h5 {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+html, body, #wrap {height: 100%;}
+
+body > #wrap {height: auto; min-height: 100%;}
+
+#main {padding-bottom: 70px;}  /* отступ должен быть равен высоте футера */
+
+#footer {position: relative;
+    margin-top: -70px; /* отрицательное значение высоты футера */
+    height: 50px;
+    clear:both;}
+
+#showLogin {
+    padding-right: 20px;
+    margin-right: 20px;
+}
+@media screen and (max-width: 767px) {
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all .25s ease-out;
+        -o-transition: all .25s ease-out;
+        transition: all .25s ease-out;
+    }
+
+    .sidebar-offcanvas {
+        position: absolute;
+        width: 60%; /* 6 columns */
+        display: none;
+    }
+
+    .row-offcanvas-right {
+        right: 0;
+    }
+
+    .row-offcanvas-right.active
+    .sidebar-offcanvas {
+        display: block;
+        right: 0;
+        top: 0;
+        z-index: 1;
+    }
+
+    .row-offcanvas-right.active {
+
+    }
+}
+
+#categoryIndexContainer {
+    margin-top: 30px;
+}
+
+#categoriesList {
+    list-style-type: none !important;
+}

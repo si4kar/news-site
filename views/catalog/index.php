@@ -24,7 +24,7 @@
 
                             <div class="card">
                                 <div class="card-img">
-                                    <img src="<?=Product::getImage($product['id'])?>" width="275px" height="300px" >
+                                    <img src="<?=Article::getImage($product['id'])?>" width="275px" height="300px" >
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">
