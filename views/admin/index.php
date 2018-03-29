@@ -12,6 +12,7 @@
                 <li><a href="/admin/article">Управление статьями</a></li>
                 <li><a href="/admin/category">Управление категориями</a></li>
                 <li><a href="/admin/comment">Управление комментариями</a></li>
+                <li><a href="/admin/accept">Список комментариев на авторизацию</a></li>
             </ul>
 
     </div>

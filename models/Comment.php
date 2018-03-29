@@ -199,13 +199,14 @@ class Comment
     {
         $db  = Db::getConnection();
         $sql = 'INSERT INTO comment '
-            . '(article_id, description, user_id)'
-            . 'VALUES (:article_id, :description, :user_id)';
+            . '(article_id, description, user_id, validation)'
+            . 'VALUES (:article_id, :description, :user_id, :validation)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':article_id', $options['article_id'], PDO::PARAM_INT);
         $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
         $result->bindParam(':user_id', $options['user_id'], PDO::PARAM_INT);
+        $result->bindParam(':validation', $options['validation'], PDO::PARAM_INT);
 
         if ($result->execute()) {
             Session::setFlash('OK');
@@ -282,6 +283,32 @@ class Comment
         }
         Session::setFlashError("Что-то пошло не так");
         return 0;
+    }
+
+    public static function getUnvalidationComments()
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query('
+                  SELECT 
+                    id, date, article_id, description, user_id, validation 
+                    FROM comment WHERE validation = 1
+                    ORDER BY date DESC');
+        $commentsList = [];
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $commentsList[$i]['id'] = $row['id'];
+            $commentsList[$i]['date'] = $row['date'];
+            $commentsList[$i]['article_id'] = $row['article_id'];
+            $commentsList[$i]['description'] = $row['description'];
+            $commentsList[$i]['user_id'] = $row['user_id'];
+            $commentsList[$i]['validation'] = $row['validation'];
+            $commentsList[$i]['user_name'] = Comment::getUserById($row['user_id']);
+            $commentsList[$i]['article'] = Comment::getArticleById($row['article_id']);
+            $commentsList[$i]['category'] = Comment::getCategoryByArticleId($row['article_id']);
+            $i++;
+        }
+        return $commentsList;
     }
 
 

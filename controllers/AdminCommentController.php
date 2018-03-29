@@ -11,15 +11,13 @@ class AdminCommentController extends AdminBase
         return true;
     }
 
-    public function actionDelete($id)
+    public function actionDelete($path, $id)
     {
         self::checkAdmin();
 
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['submit']) || isset($_POST['back'])) {
             Comment::deleteCommentById($id);
-            Router::redirect('/admin/comment');
-        } elseif (isset($_POST['back'])) {
-            Router::redirect('/admin/comment');
+            Router::redirect('/admin/'. $path);
         }
         require_once(ROOT . '/views/admin_comments/delete.php');
         return true;
@@ -57,6 +55,26 @@ class AdminCommentController extends AdminBase
         $userComments = Comment::getUserComments($comment['user_id']);
 
         require_once(ROOT . '/views/admin_comments/view.php');
+        return true;
+    }
+
+    public function actionAccept()
+    {
+        self::checkAdmin();
+        $commentsList = Comment::getUnvalidationComments();
+
+        require_once(ROOT . '/views/admin_comments/accept.php');
+        return true;
+
+    }
+
+    public function actionCheck($id)
+    {
+        $options = Comment::getCommentById($id);
+        $options['validation'] = 0;
+        Comment::updateCommentById($id, $options);
+
+        Router::redirect('/admin/accept');
         return true;
     }
 }

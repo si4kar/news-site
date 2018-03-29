@@ -17,6 +17,9 @@
             </div>
 
             <div class="col-sm-9">
+                <?php if (Session::hasFlash()) { ?>
+                <p><?=Session::flash()?></p>
+                <?php } ?>
                 <h2><?php echo $article['name']; ?></h2>
 
                 <img src="<?php echo Article::getImage(20)?>" width="300" height="200" alt="no" />
@@ -40,6 +43,8 @@
                 <div class="col-sm-5">
                     <h3>Комментарии:</h3>
                     <?php foreach ($comments as $comment): ?>
+                        <?php if($comment['validation'] == 0) { ?>
+
                     <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
                         <p><?=$comment['description']?></p>
                         <p><?=$comment['date']?></p>
@@ -50,8 +55,8 @@
                             <input type="hidden" name = "comment_id" value="<?=$comment['id']?>">
                             <input type="hidden" name = "rating" value="<?=$comment['rating']?>">
                         </form>
-                        <br/>
-                        <br/>
+
+                    <?php } ?>
                     <?php endforeach; ?>
                 </div>
 
@@ -66,6 +71,14 @@
                                 <input type="hidden" name="article_id" value="<?=$article['id']?>">
                                 <input type="hidden" name="user_id" value="<?=Session::get('userId')?>">
 
+                                <?php if($article['category_id'] == 4) { ?>
+                                    <input type="hidden" name="validation" value="1">
+                                    <?php Session::setFlash("Комментарий появится после одобрения модератора"); ?>
+                                <?php } ?>
+
+                                <?php if($article['category_id'] != 4) { ?>
+                                    <input type="hidden" name="validation" value="0">
+                                <?php } ?>
                                 <br><br>
 
                                 <input type="submit" name="submit" class="btn btn-default" value="Сохранить">

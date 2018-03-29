@@ -14,6 +14,7 @@ class ArticleController
             $options['description'] = $_POST['description'];
             $options['article_id'] = $_POST['article_id'];
             $options['user_id'] = $_POST['user_id'];
+            $options['validation'] = $_POST['validation'];
 
             $error = false;
             if (empty($options['description'])) {

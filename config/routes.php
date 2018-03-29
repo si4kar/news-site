@@ -31,9 +31,12 @@ Config::set('routes', array(
 
     'admin/comment/create' => 'adminComment/create',
     'admin/comment/update/([0-9]+)' => 'adminComment/update/$1',
-    'admin/comment/delete/([0-9]+)' => 'adminComment/delete/$1',
+    'admin/comment/delete/([A-Za-z]+)/([0-9]+)' => 'adminComment/delete/$1/$2',
+    'admin/comment/check/([0-9]+)' => 'adminComment/check/$1',
     'admin/comment/view/([0-9]+)' => 'adminComment/view/$1',
     'admin/comment' => 'adminComment/index',
+
+    'admin/accept' => 'adminComment/accept',
 
     'admin' => 'admin/index',
     'category/page-([0-9]+)' => 'category/index/$1',
