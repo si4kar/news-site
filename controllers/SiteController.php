@@ -5,7 +5,7 @@ class SiteController
     public function actionIndex()
     {
         $categories = Category::getCategoriesList();
-
+        $topCommentators = Comment::getTopCommentators();
         //$latestProducts = Article::getLatestProducts();
 
         //$sliderProducts = Article::getRecommendedProducts();

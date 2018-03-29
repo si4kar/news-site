@@ -42,12 +42,12 @@
                             <a href="">Analitic</a>
                         </li>
                         <li><a href="">List</a>
-                            <ul>
-                                <li><a href="">SPORT</a></li>
-                                <li><a href="">FINANCE</a></li>
-                                <li><a href="">FASHION</a></li>
-                                <li><a href="">POLITIC</a></li>
-                            </ul>
+                                <ul>
+                                    <?php $categories = Category::getCategoriesList() ?>
+                                    <?php foreach ($categories as $categoryNav): ?>
+                                    <li><a href="/category/<?=$categoryNav['id']?>"><?=$categoryNav['name']?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
                         </li>
                    </ul>
 

@@ -11,14 +11,24 @@
             <div class="col-md-8">
 
                 <?php foreach ($categories as $category): ?>
-                <h2><?=$category['name']?></h2>
+                <h2><a href="/category/<?=$category['id']?>"><?=$category['name']?></a></h2>
                     <?php $articles = Article::getArticleListByCategory($category['id']);?>
-                    <?php foreach ($articles as $article): ?>
-                    <p><a href=""><?=$article['name']?></a></p>
 
+                    <?php foreach ($articles as $article): ?>
+                        <p><a href="/article/<?=$article['id']?>"><?=$article['name']?></a></p>
 
                     <?php endforeach; ?>
                 <?php endforeach; ?>
+
+                <br/>
+                <br/>
+                <h4>ТОП 5 комментаторов</h4>
+                <?php foreach ($topCommentators as $commentators): ?>
+                    <p>Комментатор <?=$commentators['user_name']?> Количество комментариев <?=$commentators['count']?></p>
+                    <p></p>
+
+                <?php endforeach; ?>
+            </div>
 
 
         </div>

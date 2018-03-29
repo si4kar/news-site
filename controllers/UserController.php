@@ -85,4 +85,16 @@ class UserController
         Session::destroy();
         Router::redirect('/');
     }
+
+    public function actionCommentators($id, $page =1)
+    {
+        $comments = Comment::getUserComments($id, $page);
+        $userName = Comment::getUserById($id);
+
+        $total = Comment::getTotalCommentsById($id);
+        $pagination = new Pagination($total, $page, Article::SHOW_BY_DEFAULT, 'page-');
+
+        require_once (ROOT . '/views/user/comments.php');
+        return true;
+    }
 }

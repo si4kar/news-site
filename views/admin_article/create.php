@@ -38,7 +38,7 @@
                                 <?php foreach ($categoriesList as $category): ?>
 
                                     <option value="<?=$category['id']?>">
-                                        <?php echo $category['name']; ?>
+                                        <?=$category['name']?>
                                     </option>
                                 <?php endforeach; ?>
                             <?php endif; ?>

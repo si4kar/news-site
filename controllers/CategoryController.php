@@ -7,26 +7,23 @@ class CategoryController
     {
 
         $categories = Category::getCategoriesList();
-        $categories = Category::createTree($categories, 0);
 
-      //  $latestProducts = Article::getLatestProducts();
-        $productsList = Article::getProductsList();
-        $total = Article::getTotalProducts();
+        $articleList = Article::getArticleListPagination($page);
+        $total = Article::getTotalArticles();
         $pagination = new Pagination($total, $page, Category::SHOW_BY_DEFAULT, 'page-');
 
         require_once(ROOT.'/views/catalog/index.php');
         return true;
     }
 
-    public function actionCategory($categoryId, $categoryId2 = 0, $page = 1)
+    public function actionCategory($categoryId, $page = 1)
     {
-        $categories = [];
         $categories = Category::getCategoriesList();
+        $category = Category::getCategoryById($categoryId);
 
-        $categoryProducts = [];
-        $categoryProducts = Article::getProductsListByCategory($categoryId, $page);
+        $articleList = Article::getArticleListByCategory($categoryId, $page);
 
-        $total = Article::getTotalProductsInCategory($categoryId);
+        $total = Article::getTotalArticlesInCategory($categoryId);
         $pagination = new Pagination($total, $page, Article::SHOW_BY_DEFAULT, 'page-');
 
         require_once(ROOT.'/views/catalog/category.php');

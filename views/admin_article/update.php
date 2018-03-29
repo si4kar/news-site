@@ -47,8 +47,8 @@
                         <br/><br/>
 
                         <p>Изображение статьи</p>
-                        <img src="<?php echo Article::getImage($article['id']); ?>" width="200" alt="" />
-                        <input type="file" name="image" placeholder="" value="<?php echo $article['image']; ?>">
+                        <img src="<?=Article::getImage($article['id'])?>" width="200" alt="" />
+                        <input type="file" name="image" placeholder="" value="">
 
                         <p>Детальное описание</p>
                         <textarea name="description" rows = 6><?php echo $article['description']; ?></textarea>

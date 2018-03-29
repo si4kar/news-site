@@ -14,7 +14,7 @@ class Article
         $db = Db::getConnection();
         $productList = [];
 
-        $result = $db->query('SELECT id, name, price, availability, is_new FROM product '
+        $result = $db->query('SELECT id, name, price, availability, is_new FROM article '
             . 'WHERE status = "1"'
             . 'ORDER BY id DESC '
             . "LIMIT " . $count
@@ -71,38 +71,60 @@ class Article
             $result = $db->query("SELECT * FROM article WHERE id=" . $id);
             $result->setFetchMode(PDO::FETCH_ASSOC);
 
-            return $result->fetch();
+            $obj = $result->fetch();
+            Article::setVisitors($obj['id'],$obj['visitors']);
+            return $obj;
 
         }
     }
 
-/*    public static function getTotalProductsInCategory($categoryId)
+    public static function setVisitors($id, $visitors)
+    {
+        $visitors = $visitors+1;
+        $db  = Db::getConnection();
+        $sql = "UPDATE article
+            SET 
+                visitors = :visitors
+            WHERE id = :id";
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':visitors', $visitors, PDO::PARAM_INT);
+        $result->execute();
+        return $db->lastInsertId();
+
+    }
+
+    public static function currentVisitors()
+    {
+        $rand = rand(1, 15);
+        echo $rand;
+    }
+
+    public static function getTotalArticlesInCategory($categoryId)
     {
         $db = Db::getConnection();
 
-        $result = $db->query('SELECT count(id) AS count FROM product '
-                                        . 'WHERE status="1" AND category_id="'.$categoryId.'"');
+        $result = $db->query('SELECT count(id) AS count FROM article '
+                                        . 'WHERE category_id="'.$categoryId.'"');
 
 
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $row = $result->fetch();
 
         return $row['count'];
-    }*/
+    }
 
-/*    public static function getTotalProducts()
+    public static function getTotalArticles()
     {
         $db = Db::getConnection();
 
-        $result = $db->query('SELECT count(id) AS count FROM product '
-            . 'WHERE status="1"');
-
-
+        $result = $db->query('SELECT count(id) AS count FROM article');
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $row = $result->fetch();
 
         return $row['count'];
-    }*/
+    }
 
 /*    public static function getProductsByIds($idsArray)
     {
@@ -112,7 +134,7 @@ class Article
 
         $idString = implode(',', $idsArray);
 
-        $sql = "SELECT * FROM product WHERE status='1' AND id IN ($idString)";
+        $sql = "SELECT * FROM article WHERE status='1' AND id IN ($idString)";
 
         $result = $db->query($sql);
         $result->setFetchMode(PDO::FETCH_ASSOC);
@@ -138,7 +160,7 @@ class Article
 
         $productsList = array();
 
-        $result = $db->query('SELECT id, name, price, is_new FROM product '
+        $result = $db->query('SELECT id, name, price, is_new FROM article '
             . 'WHERE status = "1" AND is_recommended = "1"'
             . 'ORDER BY id DESC ');
 
@@ -170,6 +192,57 @@ class Article
         }
         return $articlesList;
     }
+
+    public static function getArticleListPagination($page)
+    {
+        $page = intval($page);
+        $offset = ($page-1) * self::SHOW_BY_DEFAULT;
+        $db = Db::getConnection();
+
+        $articles = [];
+
+        $result = $db->query("SELECT id, name FROM article "
+            . "ORDER BY id ASC "
+            . "LIMIT ".self::SHOW_BY_DEFAULT
+            . ' OFFSET '. $offset);
+
+        $i =0;
+
+        while ($row = $result->fetch()) {
+            $articles[$i]['id'] = $row['id'];
+            $articles[$i]['name'] = $row['name'];
+            $i++;
+        }
+        return $articles;
+    }
+
+    public static function getArticlesListByCategory($categoryId = false, $page = 1)
+    {
+        if($categoryId) {
+
+            $page = intval($page);
+            $offset = ($page-1) * self::SHOW_BY_DEFAULT;
+            $db = Db::getConnection();
+
+            $articles = [];
+
+            $result = $db->query("SELECT id, name FROM article "
+                . "WHERE category_id = '$categoryId' "
+                . "ORDER BY id ASC "
+                . "LIMIT ".self::SHOW_BY_DEFAULT
+                . ' OFFSET '. $offset);
+
+            $i =0;
+
+            while ($row = $result->fetch()) {
+                $articles[$i]['id'] = $row['id'];
+                $articles[$i]['name'] = $row['name'];
+                $i++;
+            }
+            return $articles;
+        }
+    }
+
 
     public static function deleteArticleById($id)
     {
@@ -214,7 +287,7 @@ class Article
                 category_id = :category_id, 
                 description = :description, 
                 analitic = :analitic, 
-                is_new = :is_new 
+                is_new = :is_new,
             WHERE id = :id";
 
         $result = $db->prepare($sql);
@@ -233,16 +306,22 @@ class Article
         return 0;
     }
 
-    public static function getImage($id)
+   /* public static function getImage($id)
     {
-        $noImage = 'no-image.jpg';
+        // Название изображения-пустышки
 
-        $path = '/webroot/upload/images/article/';
+        $noImage = 'no-image.jpg';
+        // Путь к папке с товарами
+        $path = '/upload/images/article/';
+        // Путь к изображению товара
         $pathToProductImage = $path . $id . '.jpg';
-        if (file_exists($_SERVER['DOCUMENT_ROOT'].$pathToProductImage)) {
+        if (file_exists($pathToProductImage)) {
+            // Если изображение для товара существует
+            // Возвращаем путь изображения товара
+            echo $pathToProductImage;
             return $pathToProductImage;
         }
         // Возвращаем путь изображения-пустышки
         return $path . $noImage;
-    }
+    }*/
 }

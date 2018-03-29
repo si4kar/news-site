@@ -10,9 +10,13 @@ Config::set('routes', array(
     'category/([0-9]+)' => 'category/category/$1',
     'category/([0-9]+)/([0-9]+)' => 'category/category/$1/$2',
 
+
     'user/login' => 'user/login',
     'user/register' => 'user/register',
     'user/exit' => 'user/exit',
+
+    'user/([0-9]+)/page-([0-9]+)' => 'user/commentators/$1/$2',
+    'user/([0-9]+)' => 'user/commentators/$1',
 
     'admin/article/create' => 'adminArticle/create',
     'admin/article/update/([0-9]+)' => 'adminArticle/update/$1',
@@ -31,6 +35,7 @@ Config::set('routes', array(
     'admin/comment' => 'adminComment/index',
 
     'admin' => 'admin/index',
+    'category/page-([0-9]+)' => 'category/index/$1',
     'category' => 'category/index',
     'cabinet' => 'cabinet/index',
 

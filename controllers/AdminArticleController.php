@@ -26,23 +26,22 @@ class AdminArticleController extends AdminBase
             $options['is_new'] = $_POST['is_new'];
 
             $error = false;
-
             if (!isset($options['name']) || empty($options['name'])) {
                 $error = true;
                 Session::setFlashError("Заполните поля");
             }
             if ($error == false) {
                 $id = Article::createArticle($options);
-
                 if ($id) {
                     if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
-                        move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']
-                            . "/webroot/upload/images/article/{$id}.jpg");
+                        // Если загружалось, переместим его в нужную папке, дадим новое имя
+                        move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/article/{$id}.jpg");
                     }
                 };
                 Router::redirect('/admin/article/');
             }
         }
+
         require_once(ROOT . '/views/admin_article/create.php');
         return true;
 
@@ -65,7 +64,8 @@ class AdminArticleController extends AdminBase
 
             if (Article::updateArticleById($id, $options)) {
                 if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
-                    move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/webroot/upload/images/article/{$id}.jpg");
+                    // Если загружалось, переместим его в нужную папке, дадим новое имя
+                    move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/article/{$id}.jpg");
                 }
             }
             Router::redirect('/admin/article');

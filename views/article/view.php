@@ -3,75 +3,69 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <div class="left-sidebar">
-                    <h2>Каталог</h2>
-                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+            <div class="col-sm-3 left-sidebar">
+                    <h3 style="text-align: center">Каталог</h3>
                         <?php foreach ($categories as $categoryItem): ?>
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
+                                    <h5 class="panel-title" style="text-align: center">
                                         <a href="/category/<?php echo $categoryItem['id'];?>">
                                             <?php echo $categoryItem['name'];?>
                                         </a>
-                                    </h4>
-                                </div>
+                                    </h5>
                             </div>
                         <?php endforeach; ?>
-                    </div><!--/category-products-->
-
-                </div>
             </div>
 
-            <div class="col-sm-9 padding-right">
-                <div class="product-details"><!--product-details-->
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div class="view-product">
-                                <img src="<?php echo Article::getImage($product['id']); ?>" alt="" />
-                            </div>
+            <div class="col-sm-9">
+                <h2><?php echo $article['name']; ?></h2>
+                <img src="/upload/images/article/20.jpg" width="300" height="200" alt="no" />
+
+                <h5>Описание статьи</h5>
+                <p> <?php echo $article['description'] ?></p>
+
+                <h5>Текущее кол-во просмотров <?php Article::currentVisitors() ?></h5>
+                <h5>Количество просмотров данной статьи <?=$article['visitors']?></h5>
+
+
+                <br/>
+                <br/>
+                <?php /*include ROOT.'/views/comments/comments.php'; */?>
+                <div class="col-sm-5">
+                    <h3>Комментарии:</h3>
+                    <?php foreach ($comments as $comment): ?>
+                    <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
+                        <p><?=$comment['description']?></p>
+                        <p><?=$comment['date']?></p>
+                        <br/>
+                        <br/>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="col-sm-5">
+                    <?php if(Session::get('login') != null) { ?>
+
+                        <div class="login-form">
+                            <form action="#" method="post">
+
+                                <p>Добавить комментарий</p>
+                                <textarea name="description"  cols="80" rows="7"></textarea>
+                                <input type="hidden" name="article_id" value="<?=$article['id']?>">
+                                <input type="hidden" name="user_id" value="<?=Session::get('userId')?>">
+
+                                <br><br>
+
+                                <input type="submit" name="submit" class="btn btn-default" value="Сохранить">
+                            </form>
                         </div>
-                        <div class="col-sm-7">
-                            <div class="product-information"><!--/product-information-->
 
-                                <?php if ($product['is_new']): ?>
-                                    <img src="/webroot/images/product-details/new.jpg" class="newarrival" alt="" />
-                                <?php endif; ?>
-
-                                <h2><?php echo $product['name']; ?></h2>
-                                <p>Код товара: <?php echo $product['code'] ?></p>
-                                <span>
-                                            <span>US $<?php echo $product['price'] ?></span>
-                                            <label>Количество:</label>
-                                            <input type="text" value="1" />
-                                            <button type="button" class="btn btn-default add-to-cart" data-id="<?php echo $product['id'];?>">
-                                                <i class="fa fa-shopping-cart"></i>
-                                                В корзину
-                                            </button>
-
-                                        </span>
-                                <p><b>Наличие:</b> <?php echo $product['availability'] ?></p>
-                                <p><b>Состояние:</b> <?php echo $product['is_new'] ?></p>
-                                <p><b>Производитель:</b> <?php echo $product['brand'] ?></p>
-                            </div><!--/product-information-->
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h5>Описание товара</h5>
-                            <p> <?php echo $product['description'] ?></p>
-                        </div>
-                    </div>
-                </div><!--/product-details-->
-
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-
 <br/>
 <br/>
-
 
 <?php include ROOT.'/views/layouts/footer.php'; ?>

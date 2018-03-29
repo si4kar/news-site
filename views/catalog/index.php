@@ -1,58 +1,41 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
     <section>
-        <div class="container" id="categoryIndexContainer">
-        <div class="container-fluid">
-            <div class="row row-offcanvas row-offcanvas-right">
-                <div class="col-xs-6 col-sm-2 col-sm-pull-9 sidebar-offcanvas" id="sidebar">
-                    <div class="list-group">
-                        <h4>Collections:</h4>
-                        <div class="panel-group category-products">
-                            <div >
-                                    <h4 class="panel-title" id="categoriesList">
-                                        <?php echo $categories;?>
-                                    </h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <h2>Каталог</h2>
+                        <div class="panel-group category-products" id="accordian">
+                            <?php foreach ($categories as $categoryItem): ?>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="/category/<?php echo $categoryItem['id'];?>">
+                                                <?php echo $categoryItem['name'];?>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-9 padding-right">
+                    <div class="product-details">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <?php foreach ($articleList as $article): ?>
+                                    <p><a href="/article/<?=$article['id']?>"><?=$article['name']?></a></p>
+                                <?php endforeach; ?>
                             </div>
+
                         </div>
                     </div>
-                </div><!--/.sidebar-offcanvas-->
-                <div class="col-xs-12 col-sm-10 col-sm-push-3">
+                </div>
 
-                    <div class="row" id="categoriesList">
-                        <?php foreach ($productsList as $product): ?>
-                        <div class="col-xs-6 col-lg-4">
-
-                            <div class="card">
-                                <div class="card-img">
-                                    <img src="<?=Article::getImage($product['id'])?>" width="275px" height="300px" >
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <?=$product['name']?>
-                                    <p>price <?=$product['price']?>$</p>
-                                    </p>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <a href="/cart/add/<?php echo $product['id'];?>" data-id="<?=$product['id']?>" class="card-link">Add to cart</a>
-                                </div>
-                                <!--Нужно пофиксить вывод картинки is_new-->
-                                <?php /*if ($product['is_new']): */?><!--
-                                <img src="/webroot/images/home/new.png" class="new" alt="" />
-                            --><?php /*endif; */?>
-                            </div>
-                        </div><!--/.col-xs-6.col-lg-4-->
-                    <?php endforeach; ?>
-
-                    </div><!--/row-->
-                </div><!--/.col-xs-12.col-sm-9-->
-
-
-            </div><!--/row-->
-
-
-
-        </div><!--/.container-->
-        </div>
     </section>
 
     <div class="container contPagination">
