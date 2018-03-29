@@ -30,12 +30,13 @@ class CategoryController
         return true;
     }
 
-    public function actionAnalytic()
+    public function actionAnalytic($page = 1)
     {
-        $articleList = Article::getAnalyticList();
-        echo "<pre>";
-        var_dump($articleList);
-        die;
+        $articleList = Article::getAnalyticList($page);
+        $total = Article::getTotalAnaliticArticlesInCategory();
+        $pagination = new Pagination($total, $page, Article::SHOW_BY_DEFAULT, 'page-');
+
+        require_once(ROOT.'/views/catalog/analytic.php');
         return true;
     }
 }

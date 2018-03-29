@@ -8,6 +8,7 @@ Config::set('routes', array(
     'category/([0-9]+)/page-([0-9]+)' => 'category/category/$1/$2',
     'category/([0-9]+)' => 'category/category/$1',
     'category/([0-9]+)/([0-9]+)' => 'category/category/$1/$2',
+    'category/analytic/page-([0-9]+)' => 'category/analytic/$1',
     'category/analytic' => 'category/analytic',
 
 

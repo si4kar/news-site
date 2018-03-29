@@ -269,11 +269,15 @@ class Article
         return $path . $noImage;
     }
 
-    public static function getAnalyticList()
+    public static function getAnalyticList($page)
     {
+        $page = intval($page);
+        $offset = ($page-1) * self::SHOW_BY_DEFAULT;
         $db = Db::getConnection();
 
-        $result = $db->query("SELECT * FROM article WHERE analytic= 'analytic'");
+        $result = $db->query("SELECT * FROM article WHERE analytic = 1 "
+            . "LIMIT ".self::SHOW_BY_DEFAULT
+            . ' OFFSET '. $offset);
         $articlesList = [];
         $i =0;
 
@@ -286,5 +290,33 @@ class Article
             $i++;
         }
         return $articlesList;
+    }
+
+    public static function getTotalAnaliticArticlesInCategory()
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT count(id) AS count FROM article '
+            . 'WHERE analytic = "1"');
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+
+        return $row['count'];
+    }
+
+    public static function splitText($text)
+    {
+        $items =  preg_split("/[.?!] /", $text);
+
+        if (key_exists(5, $items))
+        {
+            $items = array_slice($items, 5);
+        }
+        $text = implode(",", $items);
+
+        echo $text;
+        die;
+
     }
 }

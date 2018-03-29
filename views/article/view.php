@@ -22,7 +22,13 @@
                 <img src="<?php echo Article::getImage(20)?>" width="300" height="200" alt="no" />
 
                 <h5>Описание статьи</h5>
-                <p> <?php echo $article['description'] ?></p>
+                <?php if(Session::get('login') != null) { ?>
+                    <p> <?=$article['description']?></p>
+                <?php }  ?>
+
+                <?php if(Session::get('login') === null && $article['analytic'] == 1) { ?>
+                    <p> <?=Article::splitText($article['description'])?></p>
+                <?php }  ?>
 
                 <h5>Текущее кол-во просмотров <?php Article::currentVisitors() ?></h5>
                 <h5>Количество просмотров данной статьи <?=$article['visitors']?></h5>
