@@ -7,7 +7,6 @@ class ArticleController
         $categories = [];
         $categories = Category::getCategoriesList();
         $comments = Comment::getArticleComments($articleId);
-
         $article = Article::getArticleById($articleId);
 
 
@@ -28,8 +27,19 @@ class ArticleController
             }
         }
 
+        if (isset($_POST['down']) || isset($_POST['up'])) {
+            $option['id'] = $_POST['comment_id'];
+            $option['rating'] = $_POST['rating'];
+            if (isset($_POST['down'])) Comment::changeRaiting($option, 'down');
+            if (isset($_POST['up'])) Comment::changeRaiting($option, 'up');
+
+            Router::redirect('/article/' . $articleId);
+        }
+
 
         require_once(ROOT . '/views/article/view.php');
         return true;
     }
+
+
 }

@@ -5,35 +5,6 @@ class Article
 {
     const SHOW_BY_DEFAULT = 5;
 
-    public static function getLatestProducts($count = self::SHOW_BY_DEFAULT, $page =1)
-    {
-        $page = intval($page);
-        $count = intval($count);
-        $offset = ($page) * $count;
-
-        $db = Db::getConnection();
-        $productList = [];
-
-        $result = $db->query('SELECT id, name, price, availability, is_new FROM article '
-            . 'WHERE status = "1"'
-            . 'ORDER BY id DESC '
-            . "LIMIT " . $count
-            . ' OFFSET '. $offset);
-
-        $i = 0;
-
-        while ($row = $result->fetch()) {
-            $productList[$i]['id'] = $row['id'];
-            $productList[$i]['name'] = $row['name'];
-            $productList[$i]['availability'] = $row['availability'];
-            $productList[$i]['price'] = $row['price'];
-            $productList[$i]['is_new'] = $row['is_new'];
-            $i++;
-        }
-
-        return $productList;
-    }
-
     public static function getArticleListByCategory($categoryId = false, $page = 1)
     {
         if($categoryId) {
@@ -152,27 +123,6 @@ class Article
         }
 
         return $products;
-    }*/
-
-   /* public static function getRecommendedProducts()
-    {
-        $db = Db::getConnection();
-
-        $productsList = array();
-
-        $result = $db->query('SELECT id, name, price, is_new FROM article '
-            . 'WHERE status = "1" AND is_recommended = "1"'
-            . 'ORDER BY id DESC ');
-
-        $i = 0;
-        while ($row = $result->fetch()) {
-            $productsList[$i]['id'] = $row['id'];
-            $productsList[$i]['name'] = $row['name'];
-            $productsList[$i]['price'] = $row['price'];
-            $productsList[$i]['is_new'] = $row['is_new'];
-            $i++;
-        }
-        return $productsList;
     }*/
 
     public static function getArticlesList()
@@ -306,22 +256,35 @@ class Article
         return 0;
     }
 
-   /* public static function getImage($id)
+   public static function getImage($id)
     {
-        // Название изображения-пустышки
-
         $noImage = 'no-image.jpg';
-        // Путь к папке с товарами
+
         $path = '/upload/images/article/';
-        // Путь к изображению товара
         $pathToProductImage = $path . $id . '.jpg';
-        if (file_exists($pathToProductImage)) {
-            // Если изображение для товара существует
-            // Возвращаем путь изображения товара
-            echo $pathToProductImage;
+        if (file_exists($_SERVER['DOCUMENT_ROOT'].$pathToProductImage)) {
             return $pathToProductImage;
         }
         // Возвращаем путь изображения-пустышки
         return $path . $noImage;
-    }*/
+    }
+
+    public static function getAnalyticList()
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query("SELECT * FROM article WHERE analytic= 'analytic'");
+        $articlesList = [];
+        $i =0;
+
+        while ($row = $result->fetch()) {
+            $articlesList[$i]['id'] = $row['id'];
+            $articlesList[$i]['name'] = $row['name'];
+            $articlesList[$i]['is_new'] = $row['is_new'];
+            $articlesList[$i]['description'] = $row['description'];
+            $articlesList[$i]['visitors'] = $row['visitors'];
+            $i++;
+        }
+        return $articlesList;
+    }
 }

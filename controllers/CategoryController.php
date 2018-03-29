@@ -29,4 +29,13 @@ class CategoryController
         require_once(ROOT.'/views/catalog/category.php');
         return true;
     }
+
+    public function actionAnalytic()
+    {
+        $articleList = Article::getAnalyticList();
+        echo "<pre>";
+        var_dump($articleList);
+        die;
+        return true;
+    }
 }

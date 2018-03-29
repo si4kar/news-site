@@ -21,7 +21,7 @@ class AdminArticleController extends AdminBase
         if (isset($_POST['submit'])) {
             $options['name'] = $_POST['name'];
             $options['category_id'] = $_POST['category_id'];
-            $options['analitic'] = $_POST['analitic'];
+            $options['analytic'] = $_POST['analytic'];
             $options['description'] = $_POST['description'];
             $options['is_new'] = $_POST['is_new'];
 
@@ -59,7 +59,7 @@ class AdminArticleController extends AdminBase
             $options['name'] = $_POST['name'];
             $options['category_id'] = $_POST['category_id'];
             $options['description'] = $_POST['description'];
-            $options['analitic'] = $_POST['analitic'];
+            $options['analytic'] = $_POST['analytic'];
             $options['is_new'] = $_POST['is_new'];
 
             if (Article::updateArticleById($id, $options)) {

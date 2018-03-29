@@ -55,7 +55,7 @@
                         <br/><br/>
 
                         <p>Аналитика</p>
-                        <select name="analitic">
+                        <select name="analytic">
                             <option value="1" selected="selected">Да</option>
                             <option value="0">Нет</option>
                         </select>

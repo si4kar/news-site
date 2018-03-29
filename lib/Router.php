@@ -10,10 +10,6 @@ class Router
 	    $this->routes = Config::get('routes');
 	}
 
-    /**
-     * Return request string
-     * @return string
-     */
 	private function getURI()
     {
         if(!empty($_SERVER['REQUEST_URI'])) {
@@ -47,10 +43,7 @@ class Router
 
                 $controllerObject = new $controllerName;
 
-                /*echo $actionName;
-                die;
-                */$result = call_user_func_array(array($controllerObject,$actionName), $params);
-              //  $result = $controllerObject->$actionName($params);
+                $result = call_user_func_array(array($controllerObject,$actionName), $params);
 
                 if ($result != null) {
                     break;

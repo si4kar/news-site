@@ -24,10 +24,17 @@
                 <br/>
                 <h4>ТОП 5 комментаторов</h4>
                 <?php foreach ($topCommentators as $commentators): ?>
-                    <p>Комментатор <?=$commentators['user_name']?> Количество комментариев <?=$commentators['count']?></p>
+                    <p>Комментатор <a href="/user/<?=$commentators['user_id']?>"><?=$commentators['user_name']?></a> Количество комментариев <?=$commentators['count']?></p>
                     <p></p>
 
                 <?php endforeach; ?>
+
+                <h4>ТОП 3 активных темы:</h4>
+                <?php foreach ($topArticles as $topArticle): ?>
+                    <p><a href="/article/<?=$topArticle['article_id']?>"><?=$topArticle['article']?></a></p>
+
+                <?php endforeach; ?>
+
             </div>
 
 

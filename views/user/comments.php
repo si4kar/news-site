@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col-sm-5">
                                 <?php foreach ($comments as $comment): ?>
-                                    <p><?=$comment['article']?></p>
+                                    <p><a href="/article/<?=$comment['article_id']?>"><?=$comment['article']?></a></p>
                                     <p><?=$comment['description']?></p>
                                     <p><?=$comment['date']?></p>
                                     <br/>

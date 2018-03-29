@@ -2,13 +2,13 @@
 
 Config::set('routes', array(
     'article/([0-9]+)' => 'article/view/$1',
-
     'catalog/page-([0-9]+)' => 'catalog/index/$1',
 
 
     'category/([0-9]+)/page-([0-9]+)' => 'category/category/$1/$2',
     'category/([0-9]+)' => 'category/category/$1',
     'category/([0-9]+)/([0-9]+)' => 'category/category/$1/$2',
+    'category/analytic' => 'category/analytic',
 
 
     'user/login' => 'user/login',
@@ -38,6 +38,8 @@ Config::set('routes', array(
     'category/page-([0-9]+)' => 'category/index/$1',
     'category' => 'category/index',
     'cabinet' => 'cabinet/index',
+
+
 
     'contact' => 'site/contact',
     '' => 'site/index',

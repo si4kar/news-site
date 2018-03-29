@@ -175,7 +175,7 @@ class Comment
         if ($id) {
             $db = Db::getConnection();
 
-            $result = $db->query("SELECT * FROM comment WHERE article_id=" . $id);
+            $result = $db->query("SELECT * FROM comment WHERE article_id= '$id' ORDER BY rating DESC");
             $commentsList = [];
             $i = 0;
             while ($row = $result->fetch()) {
@@ -185,6 +185,7 @@ class Comment
                 $commentsList[$i]['description'] = $row['description'];
                 $commentsList[$i]['user_id'] = $row['user_id'];
                 $commentsList[$i]['validation'] = $row['validation'];
+                $commentsList[$i]['rating'] = $row['rating'];
                 $commentsList[$i]['user_name'] = Comment::getUserById($row['user_id']);
                 $commentsList[$i]['article'] = Comment::getArticleById($row['article_id']);
                 $commentsList[$i]['category'] = Comment::getCategoryByArticleId($row['article_id']);
@@ -232,7 +233,7 @@ class Comment
     {
         $db = Db::getConnection();
 
-        $result = $db->query('SELECT user_id, count(user_id) AS count FROM comment 
+        $result = $db->query('SELECT user_id, date, count(user_id) AS count FROM comment 
                                         GROUP BY user_id ORDER BY user_id ASC LIMIT 5');
         $commentsList = [];
         $i = 0;
@@ -244,6 +245,43 @@ class Comment
         }
 
         return $commentsList;
+    }
+
+    public static function getTopArticles()
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT article_id, count(article_id) AS count FROM comment 
+                                        WHERE date >= CURRENT_DATE 
+                                        GROUP BY article_id ORDER BY article_id ASC LIMIT 3');
+        $commentsList = [];
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $commentsList[$i]['article_id'] = $row['article_id'];
+            $commentsList[$i]['count'] = $row['count'];
+            $commentsList[$i]['article'] = self::getArticleById($row['article_id']);
+            $i++;
+        }
+        return $commentsList;
+    }
+
+    public static function changeRaiting($options, $direction)
+    {
+        $db  = Db::getConnection();
+        $sql = "UPDATE comment SET rating = :rating WHERE id = :id";
+        if ($options['rating'] > 0 && $direction == "down") $options['rating'] = $options['rating'] - 1;
+        if ($direction == "up") $options['rating'] = $options['rating'] + 1;
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $options['id'], PDO::PARAM_INT);
+        $result->bindParam(':rating', $options['rating'], PDO::PARAM_INT);
+
+        if ($result->execute()) {
+            Session::setFlash('OK');
+            return $db->lastInsertId();
+        }
+        Session::setFlashError("Что-то пошло не так");
+        return 0;
     }
 
 

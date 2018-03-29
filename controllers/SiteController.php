@@ -6,6 +6,7 @@ class SiteController
     {
         $categories = Category::getCategoriesList();
         $topCommentators = Comment::getTopCommentators();
+        $topArticles = Comment::getTopArticles();
         //$latestProducts = Article::getLatestProducts();
 
         //$sliderProducts = Article::getRecommendedProducts();

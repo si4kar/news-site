@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
 </head>
-<div id="wrap">
+<div id="wrap"">
     <div id="header">
         <nav class="navbar-expand-md navbar-dark bg-dark fixed-top">
             <div class="collapse navbar-collapse navbar-brand" id="navbarSupportedContent">
@@ -39,7 +39,7 @@
                 <li><a href="/category/">Category</a>
                     <ul class="ulColor">
                         <li>
-                            <a href="">Analitic</a>
+                            <a href="/category/analytic">Analytic</a>
                         </li>
                         <li><a href="">List</a>
                                 <ul>

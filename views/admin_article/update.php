@@ -56,9 +56,9 @@
                         <br/><br/>
 
                         <p>Аналитика</p>
-                        <select name="analitic">
-                            <option value="1" <?php if ($article['analitic'] == 1) echo ' selected="selected"'; ?>>Да</option>
-                            <option value="0" <?php if ($article['analitic'] == 0) echo ' selected="selected"'; ?>>Нет</option>
+                        <select name="analytic">
+                            <option value="1" <?php if ($article['analytic'] == 1) echo ' selected="selected"'; ?>>Да</option>
+                            <option value="0" <?php if ($article['analytic'] == 0) echo ' selected="selected"'; ?>>Нет</option>
                         </select>
 
                         <br/><br/>

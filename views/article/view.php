@@ -18,7 +18,8 @@
 
             <div class="col-sm-9">
                 <h2><?php echo $article['name']; ?></h2>
-                <img src="/upload/images/article/20.jpg" width="300" height="200" alt="no" />
+
+                <img src="<?php echo Article::getImage(20)?>" width="300" height="200" alt="no" />
 
                 <h5>Описание статьи</h5>
                 <p> <?php echo $article['description'] ?></p>
@@ -36,6 +37,13 @@
                     <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
                         <p><?=$comment['description']?></p>
                         <p><?=$comment['date']?></p>
+                        <p>Рейтинг <?=$comment['rating']?></p>
+                        <form action="" method="post">
+                        <input type="submit" name="down" value="down">
+                        <input type="submit" name="up" value="up">
+                            <input type="hidden" name = "comment_id" value="<?=$comment['id']?>">
+                            <input type="hidden" name = "rating" value="<?=$comment['rating']?>">
+                        </form>
                         <br/>
                         <br/>
                     <?php endforeach; ?>
