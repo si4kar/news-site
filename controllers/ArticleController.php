@@ -2,11 +2,14 @@
 
 class ArticleController
 {
-    public function actionView($articleId)
+    public function actionView($articleId, $page=1)
     {
         $categories = [];
         $categories = Category::getCategoriesList();
-        $comments = Comment::getArticleComments($articleId);
+        $comments = Comment::getArticleComments($articleId, $page);
+        $total = Comment::getTotalCommentInArticle($articleId);
+        $pagination = new Pagination($total, $page, Article::SHOW_BY_DEFAULT, 'page-');
+
         $article = Article::getArticleById($articleId);
 
 

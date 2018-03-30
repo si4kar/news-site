@@ -34,8 +34,7 @@ class AdminArticleController extends AdminBase
                 $id = Article::createArticle($options);
                 if ($id) {
                     if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
-                        // Если загружалось, переместим его в нужную папке, дадим новое имя
-                        move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/article/{$id}.jpg");
+                        move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/webroot/upload/images/article/{$id}.jpg");
                     }
                 };
                 Router::redirect('/admin/article/');
@@ -62,10 +61,10 @@ class AdminArticleController extends AdminBase
             $options['analytic'] = $_POST['analytic'];
             $options['is_new'] = $_POST['is_new'];
 
+
             if (Article::updateArticleById($id, $options)) {
                 if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
-                    // Если загружалось, переместим его в нужную папке, дадим новое имя
-                    move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/article/{$id}.jpg");
+                    move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/webroot/upload/images/article/{$id}.jpg");
                 }
             }
             Router::redirect('/admin/article');

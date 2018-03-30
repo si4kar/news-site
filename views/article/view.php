@@ -22,7 +22,7 @@
                 <?php } ?>
                 <h2><?php echo $article['name']; ?></h2>
 
-                <img src="<?php echo Article::getImage(20)?>" width="300" height="200" alt="no" />
+                <img src="<?php echo Article::getImage($article['id'])?>" width="200" height="180" alt="no" />
 
                 <h5>Описание статьи</h5>
                 <?php if(Session::get('login') != null) { ?>
@@ -43,21 +43,45 @@
                 <div class="col-sm-5">
                     <h3>Комментарии:</h3>
                     <?php foreach ($comments as $comment): ?>
-                        <?php if($comment['validation'] == 0) { ?>
+                        <?php if($comment['category_id'] != 4){ ?>
+                            <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
+                            <p><?=$comment['description']?></p>
+                            <p><?=$comment['date']?></p>
 
-                    <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
-                        <p><?=$comment['description']?></p>
-                        <p><?=$comment['date']?></p>
-                        <p>Рейтинг <?=$comment['rating']?></p>
-                        <form action="" method="post">
-                        <input type="submit" name="down" value="down">
-                        <input type="submit" name="up" value="up">
-                            <input type="hidden" name = "comment_id" value="<?=$comment['id']?>">
-                            <input type="hidden" name = "rating" value="<?=$comment['rating']?>">
-                        </form>
+                            <p>Рейтинг <?=$comment['rating']?></p>
+
+                            <form action="" method="post">
+                                <input type="submit" name="down" value="down">
+                                <input type="submit" name="up" value="up">
+                                <input type="hidden" name = "comment_id" value="<?=$comment['id']?>">
+                                <input type="hidden" name = "rating" value="<?=$comment['rating']?>">
+                            </form>
+
+                    <?php } ?>
+
+                        <?php if($comment['category_id'] == 4 && $comment['validation'] == 0 ){ ?>
+                            <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
+                            <p><?=$comment['description']?></p>
+                            <p><?=$comment['date']?></p>
+
+                            <p>Рейтинг <?=$comment['rating']?></p>
+
+                            <form action="" method="post">
+                                <input type="submit" name="down" value="down">
+                                <input type="submit" name="up" value="up">
+                                <input type="hidden" name = "comment_id" value="<?=$comment['id']?>">
+                                <input type="hidden" name = "rating" value="<?=$comment['rating']?>">
+                            </form>
 
                     <?php } ?>
                     <?php endforeach; ?>
+                        <br>
+                        <br>
+                    <div class="container contPagination">
+                        <h5>
+                            <?php echo $pagination->get(); ?>
+                        </h5>
+                    </div>
                 </div>
 
                 <div class="col-sm-5">

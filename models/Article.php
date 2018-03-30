@@ -209,14 +209,14 @@ class Article
     {
         $db  = Db::getConnection();
         $sql = 'INSERT INTO article '
-            . '(name, category_id, analitic,'
+            . '(name, category_id, analytic,'
             . 'description, is_new)'
-            . 'VALUES (:name, :category_id, :analitic, :description, :is_new)';
+            . 'VALUES (:name, :category_id, :analytic, :description, :is_new)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
         $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
-        $result->bindParam(':analitic', $options['analitic'], PDO::PARAM_INT);
+        $result->bindParam(':analytic', $options['analytic'], PDO::PARAM_INT);
         $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
         $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
 
@@ -236,8 +236,8 @@ class Article
                 name = :name, 
                 category_id = :category_id, 
                 description = :description, 
-                analitic = :analitic, 
-                is_new = :is_new,
+                analytic = :analytic, 
+                is_new = :is_new
             WHERE id = :id";
 
         $result = $db->prepare($sql);
@@ -245,12 +245,12 @@ class Article
         $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
         $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
         $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
-        $result->bindParam(':analitic', $options['analitic'], PDO::PARAM_INT);
+        $result->bindParam(':analytic', $options['analytic'], PDO::PARAM_INT);
         $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
 
         if ($result->execute()) {
             Session::setFlash('OK');
-            return $db->lastInsertId();
+            return true;
         }
         Session::setFlashError("Что-то пошло не так");
         return 0;
@@ -260,12 +260,11 @@ class Article
     {
         $noImage = 'no-image.jpg';
 
-        $path = '/upload/images/article/';
+        $path = '/webroot/upload/images/article/';
         $pathToProductImage = $path . $id . '.jpg';
         if (file_exists($_SERVER['DOCUMENT_ROOT'].$pathToProductImage)) {
             return $pathToProductImage;
         }
-        // Возвращаем путь изображения-пустышки
         return $path . $noImage;
     }
 

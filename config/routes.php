@@ -1,6 +1,8 @@
 <?php
 
 Config::set('routes', array(
+
+    'article/([0-9])+/page-([0-9]+)' => 'article/view/$1/$2',
     'article/([0-9]+)' => 'article/view/$1',
     'catalog/page-([0-9]+)' => 'catalog/index/$1',
 

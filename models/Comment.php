@@ -109,6 +109,22 @@ class Comment
         }
     }
 
+    public static function getCategoryId($id)
+    {
+        $id = intval($id);
+
+        if($id) {
+            $db = Db::getConnection();
+
+            $result = $db->query("SELECT category_id FROM article WHERE id=" . $id);
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+
+            return $result->fetch();
+
+
+        }
+    }
+
     public static function getUserComments($id, $page =1)
     {
         $id = intval($id);
@@ -169,13 +185,18 @@ class Comment
         return 0;
     }
 
-    public static function getArticleComments($id)
+    public static function getArticleComments($id, $page =1)
     {
         $id = intval($id);
         if ($id) {
+
+            $page = intval($page);
+            $offset = ($page-1) * Article::SHOW_BY_DEFAULT;
             $db = Db::getConnection();
 
-            $result = $db->query("SELECT * FROM comment WHERE article_id= '$id' ORDER BY rating DESC");
+            $result = $db->query("SELECT * FROM comment WHERE article_id= '$id' ORDER BY rating DESC "
+                    . "LIMIT ".Article::SHOW_BY_DEFAULT
+                    . ' OFFSET '. $offset);
             $commentsList = [];
             $i = 0;
             while ($row = $result->fetch()) {
@@ -188,6 +209,7 @@ class Comment
                 $commentsList[$i]['rating'] = $row['rating'];
                 $commentsList[$i]['user_name'] = Comment::getUserById($row['user_id']);
                 $commentsList[$i]['article'] = Comment::getArticleById($row['article_id']);
+                $commentsList[$i]['category_id'] = Comment::getCategoryId($row['article_id']);
                 $commentsList[$i]['category'] = Comment::getCategoryByArticleId($row['article_id']);
                 $i++;
             }
@@ -312,4 +334,17 @@ class Comment
     }
 
 
+    public static function getTotalCommentInArticle($id)
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT count(id) AS count FROM comment '
+            . 'WHERE article_id="'.$id.'"');
+
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+
+        return $row['count'];
+    }
 }
