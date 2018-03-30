@@ -8,11 +8,10 @@
     <link rel="stylesheet" type="text/css" href="/webroot/css/style.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/styleNav.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/carusel.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
 
 </head>
-<div id="wrap"">
+<div id="wrap" style="background-color: <?=Session::get('background_main')?>">
     <div id="header">
         <nav class="navbar-expand-md navbar-dark bg-dark fixed-top">
             <div class="collapse navbar-collapse navbar-brand" id="navbarSupportedContent">

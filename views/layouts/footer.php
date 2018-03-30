@@ -19,6 +19,7 @@
     </footer>
 
 </div>
+<script src="/webroot/js/script.js"></script>
 
 </html>
 

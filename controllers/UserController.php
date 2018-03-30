@@ -97,4 +97,6 @@ class UserController
         require_once (ROOT . '/views/user/comments.php');
         return true;
     }
+
+
 }

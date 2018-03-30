@@ -39,10 +39,15 @@ Config::set('routes', array(
     'admin/comment' => 'adminComment/index',
 
     'admin/accept' => 'adminComment/accept',
+    'admin/background' => 'admin/background',
 
     'admin' => 'admin/index',
+
     'category/page-([0-9]+)' => 'category/index/$1',
     'category' => 'category/index',
+
+
+    'cabinet/background' => 'cabinet/background',
     'cabinet' => 'cabinet/index',
 
 

@@ -9,5 +9,17 @@ class CabinetController
         return true;
     }
 
+    public function actionBackground()
+    {
+        if (isset($_POST['back_main'])) {
+            $background = $_POST['background'];
+            Session::set('background_main', $background);
+            Router::redirect('/cabinet/index');
+
+        }
+        require_once (ROOT.'/views/cabinet/background.php');
+        return true;
+    }
+
 
 }

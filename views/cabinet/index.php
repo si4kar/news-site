@@ -6,7 +6,7 @@
             <h2>Кабинет пользователя</h2>
             <h3><p>Hello <?php Session::showLogin()?></p></h3>
             <ul>
-                <li><a href="/user/edit">Редктировани данных</a></li>
+                <li><a href="/cabinet/background">Изминить цвет фона сайта</a></li>
 
             </ul>
 

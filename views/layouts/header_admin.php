@@ -16,7 +16,7 @@
 
 </head>
 
-<body>
+<body style="background-color: <?=Session::get('background_admin')?>">
 <div class="page-wrapper">
 
     <header id="header"><!--header-->
