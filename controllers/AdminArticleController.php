@@ -87,6 +87,7 @@ class AdminArticleController extends AdminBase
 
         if (isset($_POST['submit'])) {
             Article::deleteArticleById($id);
+
             Router::redirect('/admin/article');
         } elseif (isset($_POST['back'])) {
             Router::redirect('/admin/article');

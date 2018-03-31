@@ -174,7 +174,11 @@ class Article
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
 
-        return $result->execute();
+        if($result->execute()) {
+            self::deleteImage($id);
+        }
+
+        return true;
     }
 
     public static function createArticle($options)
@@ -238,6 +242,17 @@ class Article
             return $pathToProductImage;
         }
         return $path . $noImage;
+    }
+
+    public static function deleteImage($id)
+    {
+
+        $path = '/webroot/upload/images/article/';
+        $pathToProductImage = ROOT .$path . $id . '.jpg';
+        if (file_exists($pathToProductImage)) {
+            unlink($pathToProductImage);
+        }
+        return true;
     }
 
     public static function getAnalyticList($page)
@@ -307,5 +322,31 @@ class Article
             $i++;
         }
         return $articlesList;
+    }
+
+    public static function getArticlesByIds($articlesIdsList)
+    {
+        $articles = [];
+
+        $db = Db::getConnection();
+
+        $idString = implode(',', $articlesIdsList);
+
+        $sql = "SELECT id, name FROM article WHERE id IN ($idString)";
+
+        $result = $db->query($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        $i = 0;
+
+        while ($row = $result->fetch()) {
+
+            $articles[$i]['id'] = $row['id'];
+            $articles[$i]['name'] = $row['name'];
+
+            $i++;
+        }
+
+        return $articles;
     }
 }

@@ -51,6 +51,8 @@ Config::set('routes', array(
     'admin/accept' => 'adminComment/accept',
     'admin/background' => 'admin/background',
 
+    'tag/([0-9]+)' => 'tag/index/$1',
+    'autocomplite' => 'autocomplite/index',
     'admin' => 'admin/index',
 
     'category/page-([0-9]+)' => 'category/index/$1',

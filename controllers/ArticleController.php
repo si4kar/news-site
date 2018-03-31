@@ -9,6 +9,8 @@ class ArticleController
         $comments = Comment::getArticleComments($articleId, $page);
         $total = Comment::getTotalCommentInArticle($articleId);
         $pagination = new Pagination($total, $page, Article::SHOW_BY_DEFAULT, 'page-');
+        $tagsId = Tag::getTagsIdByArticleId($articleId);
+        $tags = Tag::getTagsByIds($tagsId);
 
         $article = Article::getArticleById($articleId);
 

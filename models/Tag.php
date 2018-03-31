@@ -18,6 +18,22 @@ class Tag
         return $tagsList;
     }
 
+    public static function getTagsListForAutocomplite()
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT id, name FROM tags ORDER BY id ASC');
+        $tagsList = [];
+        $i = 0;
+
+        while ($row = $result->fetch()) {
+            $tagsList[$i]['id'] = $row['id'];
+            $tagsList[$i]['name'] = $row['name'];
+            $i++;
+        }
+        echo json_encode($tagsList);
+    }
+
     public static function createTag($options)
     {
 
@@ -48,6 +64,24 @@ class Tag
             $obj = $result->fetch();
             return $obj;
 
+        }
+    }
+
+    public static function getTagsIdByArticleId($articleId)
+    {
+        $articleId= intval($articleId);
+
+        if($articleId) {
+            $db = Db::getConnection();
+            $tags = [];
+            $result = $db->query("SELECT tag_id FROM articleToTags WHERE article_id=" . $articleId);
+            $i = 0;
+            while ($row = $result->fetch()) {
+                $tags[$i] = $row['tag_id'];
+                $i++;
+            }
+
+            return $tags;
         }
     }
 
@@ -119,4 +153,43 @@ class Tag
         }
         return true;
     }
+
+    public static function getTagsByIds($tagsId)
+    {
+        $tags = [];
+
+        $db = Db::getConnection();
+
+        foreach ($tagsId as $tagId)
+        {
+            $i = 0;
+            $result = $db->query("SELECT name FROM tags WHERE id = '$tagId'");
+
+            while ($row = $result->fetch()) {
+                $tags[$tagId] = $row['name'];
+            }
+            $i++;
+
+        }
+
+        return $tags;
+    }
+
+    public static function getArticleListByTagId($id)
+    {
+        $articlesId = [];
+
+        $db = Db::getConnection();
+
+            $i = 0;
+            $result = $db->query("SELECT article_id FROM articleToTags WHERE tag_id = '$id'");
+
+            while ($row = $result->fetch()) {
+                $articlesId[$i] = $row['article_id'];
+                $i++;
+            }
+
+        return $articlesId;
+    }
+
 }

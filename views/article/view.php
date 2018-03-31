@@ -33,6 +33,13 @@
                     <p> <?=Article::splitText($article['description'])?></p>
                 <?php }  ?>
 
+                <h6>Теги по данной статье:</h6>
+                <div>
+                    <?php foreach ($tags as $key => $value): ?>
+                    <a href="/tag/<?=$key?>"><?=$value?></a>
+                    <?php endforeach; ?>
+                </div>
+
                 <h5>Текущее кол-во просмотров <?php Article::currentVisitors() ?></h5>
                 <h5>Количество просмотров данной статьи <?=$article['visitors']?></h5>
 
