@@ -132,3 +132,10 @@ body > #wrap {height: auto; min-height: 100%;}
 #categoriesList {
     list-style-type: none !important;
 }
+
+.card:hover > .card-price {
+
+    font-size: large;
+    color: tomato;
+
+}

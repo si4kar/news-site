@@ -8,6 +8,11 @@
     <link rel="stylesheet" type="text/css" href="/webroot/css/style.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/styleNav.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/carusel.css">
+    <script type="text/javascript" src="/webroot/js/script.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="http://malsup.github.com/jquery.cycle2.js"></script>
+
+
 
 
 </head>
@@ -34,13 +39,13 @@
 
         <div class="container" id="secondNav">
             <ul class="navbar cf">
-                <li><a href="/">HOME</a></li>
-                <li><a href="/category/">Category</a>
+                <li><a href="/">Домой</a></li>
+                <li><a href="/category/">Категории</a>
                     <ul class="ulColor">
                         <li>
-                            <a href="/category/analytic">Analytic</a>
+                            <a href="/category/analytic">Аналитика</a>
                         </li>
-                        <li><a href="">List</a>
+                        <li><a href="">Список</a>
                                 <ul>
                                     <?php $categories = Category::getCategoriesList() ?>
                                     <?php foreach ($categories as $categoryNav): ?>

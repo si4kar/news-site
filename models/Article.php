@@ -97,34 +97,6 @@ class Article
         return $row['count'];
     }
 
-/*    public static function getProductsByIds($idsArray)
-    {
-        $products = [];
-
-        $db = Db::getConnection();
-
-        $idString = implode(',', $idsArray);
-
-        $sql = "SELECT * FROM article WHERE status='1' AND id IN ($idString)";
-
-        $result = $db->query($sql);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-
-        $i = 0;
-
-        while ($row = $result->fetch()) {
-
-            $products[$i]['id'] = $row['id'];
-            $products[$i]['code'] = $row['code'];
-            $products[$i]['name'] = $row['name'];
-            $products[$i]['price'] = $row['price'];
-
-            $i++;
-        }
-
-        return $products;
-    }*/
-
     public static function getArticlesList()
     {
         $db = Db::getConnection();
@@ -317,5 +289,23 @@ class Article
         echo $text;
         die;
 
+    }
+
+    public static function getLastArticles()
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT id, name, is_new, description FROM article ORDER BY id DESC LIMIT 3');
+        $articlesList = [];
+        $i = 0;
+
+        while ($row = $result->fetch()) {
+            $articlesList[$i]['id'] = $row['id'];
+            $articlesList[$i]['name'] = $row['name'];
+            $articlesList[$i]['is_new'] = $row['is_new'];
+            $articlesList[$i]['description'] = $row['description'];
+            $i++;
+        }
+        return $articlesList;
     }
 }

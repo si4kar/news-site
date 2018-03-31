@@ -38,6 +38,11 @@ Config::set('routes', array(
     'admin/comment/view/([0-9]+)' => 'adminComment/view/$1',
     'admin/comment' => 'adminComment/index',
 
+    'admin/advertising/create' => 'adminAdvertising/create',
+    'admin/advertising/update/([0-9]+)' => 'adminAdvertising/update/$1',
+    'admin/advertising/delete/([0-9]+)' => 'adminAdvertising/delete/$1',
+    'admin/advertising' => 'adminAdvertising/index',
+
     'admin/accept' => 'adminComment/accept',
     'admin/background' => 'admin/background',
 

@@ -13,6 +13,7 @@ class ArticleController
         $article = Article::getArticleById($articleId);
 
 
+
         if (isset($_POST['submit']) && $_POST['description'] ) {
             $options['description'] = $_POST['description'];
             $options['article_id'] = $_POST['article_id'];

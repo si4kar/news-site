@@ -1,10 +1,22 @@
-window.onbeforeunload = function (event) {
-    var message = 'Sure you want to leave?';
-    if (typeof event == 'undefined') {
-        event = window.event;
-    }
-    if (event) {
-        event.returnValue = message;
-    }
-    return message;
-}
+$(document).ready(function(){
+    $('.bxslider').bxSlider({
+        mode: 'horizontal',
+        moveSlides: 1,
+        slideMargin: 40,
+        infiniteLoop: true,
+        slideWidth: 660,
+        minSlides: 3,
+        maxSlides: 3,
+        speed: 800
+    });
+});
+
+
+
+$(function(){
+    $('.bxslider').bxSlider({
+        mode: 'fade',
+        captions: true,
+        slideWidth: 600
+    });
+});

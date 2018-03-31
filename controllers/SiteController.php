@@ -7,9 +7,11 @@ class SiteController
         $categories = Category::getCategoriesList();
         $topCommentators = Comment::getTopCommentators();
         $topArticles = Comment::getTopArticles();
-        //$latestProducts = Article::getLatestProducts();
+        $lastArticles =Article::getLastArticles();
 
-        //$sliderProducts = Article::getRecommendedProducts();
+        $advertisingLeft = Advertising::getAdvertisingList(1);
+        $advertisingRight = Advertising::getAdvertisingList(0);
+
 
         require_once(ROOT.'/views/site/index.php');
         return true;
