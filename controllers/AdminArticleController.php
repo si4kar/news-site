@@ -15,8 +15,9 @@ class AdminArticleController extends AdminBase
     public function actionCreate()
     {
         self::checkAdmin();
-
+        $tagsList = Tag::getTagsList();
         $categoriesList = Category::getCategoriesListAdmin();
+        $tagsArr = [];
 
         if (isset($_POST['submit'])) {
             $options['name'] = $_POST['name'];
@@ -24,6 +25,8 @@ class AdminArticleController extends AdminBase
             $options['analytic'] = $_POST['analytic'];
             $options['description'] = $_POST['description'];
             $options['is_new'] = $_POST['is_new'];
+            $tagsArr = $_POST['tags'];
+
 
             $error = false;
             if (!isset($options['name']) || empty($options['name'])) {
@@ -32,6 +35,7 @@ class AdminArticleController extends AdminBase
             }
             if ($error == false) {
                 $id = Article::createArticle($options);
+                Tag::addTagstoArticle($id, $tagsArr);
                 if ($id) {
                     if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
                         move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/webroot/upload/images/article/{$id}.jpg");
@@ -50,7 +54,7 @@ class AdminArticleController extends AdminBase
     {
         self::checkAdmin();
         $id = intval($id);
-
+        $tagsList = Tag::getTagsList();
         $article = Article::getArticleById($id);
         $categoriesList = Category::getCategoriesListAdmin();
 
@@ -60,9 +64,10 @@ class AdminArticleController extends AdminBase
             $options['description'] = $_POST['description'];
             $options['analytic'] = $_POST['analytic'];
             $options['is_new'] = $_POST['is_new'];
-
+            $tagsArr = $_POST['tags'];
 
             if (Article::updateArticleById($id, $options)) {
+                Tag::updateTagstoArticle($id, $tagsArr);
                 if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
                     move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/webroot/upload/images/article/{$id}.jpg");
                 }

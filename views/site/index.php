@@ -51,7 +51,6 @@
                      data-cycle-speed="200">
                     <div class="cycle-overlay" style="padding-left: 100px"></div>
 
-
                     <?php foreach ($lastArticles as $article): ?>
                         <img src="<?php echo Article::getImage($article['id']); ?>"
                         data-cycle-title="<?=$article['name']?>" data-cycle-desc="" style="width: 300px; height: 200px">

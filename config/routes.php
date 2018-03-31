@@ -31,6 +31,11 @@ Config::set('routes', array(
     'admin/category/delete/([0-9]+)' => 'adminCategory/delete/$1',
     'admin/category' => 'adminCategory/index',
 
+    'admin/tag/create' => 'adminTag/create',
+    'admin/tag/update/([0-9]+)' => 'adminTag/update/$1',
+    'admin/tag/delete/([0-9]+)' => 'adminTag/delete/$1',
+    'admin/tag' => 'adminTag/index',
+
     'admin/comment/create' => 'adminComment/create',
     'admin/comment/update/([0-9]+)' => 'adminComment/update/$1',
     'admin/comment/delete/([A-Za-z]+)/([0-9]+)' => 'adminComment/delete/$1/$2',

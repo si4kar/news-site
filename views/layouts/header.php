@@ -8,9 +8,6 @@
     <link rel="stylesheet" type="text/css" href="/webroot/css/style.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/styleNav.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/carusel.css">
-    <script type="text/javascript" src="/webroot/js/script.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="http://malsup.github.com/jquery.cycle2.js"></script>
 
 
 

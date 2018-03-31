@@ -10,7 +10,7 @@
                 <ol class="breadcrumb">
                     <li><a href="/admin/">Админпанель</a></li>
                     <li><a href="/admin/article">Управление статьями</a></li>
-                    <li class="active">Редактировать статью</li>
+                    <li class="active">Создать статью</li>
                 </ol>
             </div>
 
@@ -68,6 +68,19 @@
                             <option value="0">Нет</option>
                         </select>
 
+                        <br/><br/>
+
+                        <p>Теги</p>
+                        <select name="tags[]" multiple size="10" >
+                            <?php if (is_array($tagsList)): ?>
+                                <?php foreach ($tagsList as $tag): ?>
+
+                                    <option value="<?=$tag['id']?>">
+                                        <?=$tag['name']?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
                         <br/><br/>
 
                         <input type="submit" name="submit" class="btn btn-default" value="Сохранить">

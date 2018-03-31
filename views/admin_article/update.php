@@ -9,7 +9,7 @@
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
                     <li><a href="/admin/">Админпанель</a></li>
-                    <li><a href="/admin/article">Управление статьями</a></li>
+                    <li><a href="/admin/product">Управление статьями</a></li>
                     <li class="active">Редактировать статью</li>
                 </ol>
             </div>
@@ -49,7 +49,6 @@
                         <p>Изображение статьи</p>
                         <img src="<?=Article::getImage($article['id'])?>" width="200" alt="" />
                         <input type="file" name="image" placeholder="" value="">
-
                         <p>Детальное описание</p>
                         <textarea name="description" rows = 6><?php echo $article['description']; ?></textarea>
 
@@ -69,6 +68,19 @@
                         </select>
 
                         <br/><br/>
+
+                        <p>Теги</p>
+                         <select name="tags[]" multiple size="10" >
+                         <?php if (is_array($tagsList)): ?>
+                         <?php foreach ($tagsList as $tag): ?>
+
+                            <option value="<?=$tag['id']?>">
+                            <?=$tag['name']?>
+                            </option>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            </select>
+                         <br/><br/>
 
                         <input type="submit" name="submit" class="btn btn-default" value="Сохранить">
 
