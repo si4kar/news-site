@@ -20,7 +20,7 @@ class Comment
 
         $result = $db->query('
                   SELECT 
-                    id, date, article_id, description, user_id, validation 
+                    id, date, article_id, description, user_id, validation, rating 
                     FROM comment 
                     ORDER BY validation DESC');
         $commentsList = [];
@@ -32,9 +32,10 @@ class Comment
             $commentsList[$i]['description'] = $row['description'];
             $commentsList[$i]['user_id'] = $row['user_id'];
             $commentsList[$i]['validation'] = $row['validation'];
-            $commentsList[$i]['user_name'] = Comment::getUserById($row['user_id']);
-            $commentsList[$i]['article'] = Comment::getArticleById($row['article_id']);
-            $commentsList[$i]['category'] = Comment::getCategoryByArticleId($row['article_id']);
+            $commentsList[$i]['rating'] = $row['rating'];
+            $commentsList[$i]['user_name'] = self::getUserById($row['user_id']);
+            $commentsList[$i]['article'] = self::getArticleById($row['article_id']);
+            $commentsList[$i]['category'] = self::getCategoryByArticleId($row['article_id']);
             $i++;
         }
         return $commentsList;
@@ -119,8 +120,8 @@ class Comment
             $result = $db->query("SELECT category_id FROM article WHERE id=" . $id);
             $result->setFetchMode(PDO::FETCH_ASSOC);
 
-            return $result->fetch();
-
+            $result = $result->fetch();
+            return $result['category_id'];
 
         }
     }
@@ -161,6 +162,17 @@ class Comment
         $db = Db::getConnection();
 
         $sql = "DELETE FROM comment WHERE id = :id";
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $result->execute();
+    }
+
+    public static function deleteCommentByArticleId($id)
+    {
+        $db = Db::getConnection();
+
+        $sql = "DELETE FROM comment WHERE article_id = :id";
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
 

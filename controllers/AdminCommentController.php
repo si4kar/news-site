@@ -7,6 +7,7 @@ class AdminCommentController extends AdminBase
         self::checkAdmin();
         $commentsList = Comment::getCommentList();
 
+
         require_once(ROOT . '/views/admin_comments/index.php');
         return true;
     }

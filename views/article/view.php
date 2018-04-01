@@ -29,8 +29,8 @@
                     <p> <?=$article['description']?></p>
                 <?php }  ?>
 
-                <?php if(Session::get('login') === null && $article['analytic'] == 1) { ?>
-                    <p> <?=Article::splitText($article['description'])?></p>
+                <?php if(Session::get('login') == null && $article['analytic'] == 1) { ?>
+                    <p> <?php echo Article::splitText($article['description']);?></p>
                 <?php }  ?>
 
                 <h6>Теги по данной статье:</h6>
@@ -54,9 +54,7 @@
                             <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
                             <p><?=$comment['description']?></p>
                             <p><?=$comment['date']?></p>
-
                             <p>Рейтинг <?=$comment['rating']?></p>
-
                             <form action="" method="post">
                                 <input type="submit" name="down" value="down">
                                 <input type="submit" name="up" value="up">

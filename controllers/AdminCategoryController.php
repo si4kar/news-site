@@ -39,6 +39,13 @@ class AdminCategoryController extends AdminBase
         self::checkAdmin();
 
         if (isset($_POST['submit'])) {
+
+            $articlesList = Article::getArticlesListByCategoryId($id);
+            if ($articlesList != null) {
+               foreach ($articlesList as $article) {
+                   Article::deleteArticleById($article);
+                }
+            }
             Category::deleteCategoryById($id);
             Router::redirect('/admin/category');
         } elseif (isset($_POST['back'])) {

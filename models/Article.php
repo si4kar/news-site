@@ -26,11 +26,27 @@ class Article
             while ($row = $result->fetch()) {
                 $articles[$i]['id'] = $row['id'];
                 $articles[$i]['name'] = $row['name'];
-               // $products[$i]['image'] = $row['image'];
                 $i++;
             }
             return $articles;
         }
+    }
+
+    public static function getArticlesListByCategoryId($categoryId)
+    {
+            $db = Db::getConnection();
+            $articles = [];
+
+            $result = $db->query("SELECT id FROM article "
+                    . "WHERE category_id = '$categoryId' ");
+
+            $i =0;
+
+            while ($row = $result->fetch()) {
+                $articles[$i] = $row['id'];
+                $i++;
+            }
+            return $articles;
     }
 
     public static function getArticleById($id)
@@ -178,6 +194,7 @@ class Article
         if($result->execute()) {
             self::deleteImage($id);
             self::deleteArticleToTags($id);
+            Comment::deleteCommentByArticleId($id);
         }
 
         return true;
@@ -299,12 +316,12 @@ class Article
 
         if (key_exists(5, $items))
         {
-            $items = array_slice($items, 5);
+            array_splice($items, 5);
         }
+
         $text = implode(",", $items);
 
         echo $text;
-        die;
 
     }
 

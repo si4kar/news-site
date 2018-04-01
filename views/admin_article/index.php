@@ -29,7 +29,6 @@
                 <tr>
                     <th>ID статьи</th>
                     <th>Название статьи</th>
-                    <th style="width: 50%">Описание</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -37,7 +36,6 @@
                     <tr>
                         <td><?php echo $article['id']; ?></td>
                         <td><?php echo $article['name']; ?></td>
-                        <td><?php echo $article['description']; ?></td>
                         <td><a href="/admin/article/update/<?=$article['id']?>" title="Редактировать"><i class="fa fa-pencil-square-o"></i>Редактировать</a></td>
                         <td><a href="/admin/article/delete/<?=$article['id']?>" title="Удалить"><i class="fa fa-times"></i>Удалить</a></td>
                     </tr>
