@@ -131,7 +131,6 @@ class User
             $result = $db->prepare($sql);
             $result->bindParam(':id', $id, PDO::PARAM_INT);
 
-            // Указываем, что хотим получить данные в виде массива
             $result->setFetchMode(PDO::FETCH_ASSOC);
             $result->execute();
 

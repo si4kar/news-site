@@ -27,11 +27,10 @@ class Tag
         $i = 0;
 
         while ($row = $result->fetch()) {
-            $tagsList[$i]['id'] = $row['id'];
-            $tagsList[$i]['name'] = $row['name'];
+            $tagsList[$i] = $row['name'];
             $i++;
         }
-        echo json_encode($tagsList);
+        return json_encode($tagsList);
     }
 
     public static function createTag($options)
@@ -134,6 +133,8 @@ class Tag
 
     public static function updateTagsToArticle($id, $tagsArr)
     {
+
+
         $db = Db::getConnection();
 
         $sql = "DELETE FROM articleToTags WHERE article_id = :id";
@@ -141,15 +142,19 @@ class Tag
         $result->bindParam(':id', $id, PDO::PARAM_INT);
 
         $result->execute();
-        foreach ($tagsArr as $tag) {
 
-            $sql = 'INSERT INTO articleToTags (article_id, tag_id) VALUES (:article_id, :tag_id)';
+        if ($tagsArr != null) {
+            foreach ($tagsArr as $tag) {
 
-            $result = $db->prepare($sql);
-            $result->bindParam(':article_id', $id, PDO::PARAM_INT);
-            $result->bindParam(':tag_id', $tag, PDO::PARAM_INT);
 
-            $result->execute();
+                $sql = 'INSERT INTO articleToTags (article_id, tag_id) VALUES (:article_id, :tag_id)';
+
+                $result = $db->prepare($sql);
+                $result->bindParam(':article_id', $id, PDO::PARAM_INT);
+                $result->bindParam(':tag_id', $tag, PDO::PARAM_INT);
+
+                $result->execute();
+            }
         }
         return true;
     }

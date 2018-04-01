@@ -1,8 +1,9 @@
 $(function() {
 
+    var arr = JSON.parse('<?php Tag::getTagsListForAutocomplite(); ?>');
     //autocomplete
     $("#searchHeader").autocomplete({
-        source: "/autocomplite/index",
+        source: "arr",
         minLength: 1
     });
 

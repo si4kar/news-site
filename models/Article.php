@@ -17,6 +17,7 @@ class Article
 
             $result = $db->query("SELECT id, name FROM article "
                     . "WHERE category_id = '$categoryId' "
+                    . "ORDER BY id DESC "
                     . "LIMIT ".self::SHOW_BY_DEFAULT
                     . ' OFFSET '. $offset);
 
@@ -176,6 +177,7 @@ class Article
 
         if($result->execute()) {
             self::deleteImage($id);
+            self::deleteArticleToTags($id);
         }
 
         return true;
@@ -349,4 +351,17 @@ class Article
 
         return $articles;
     }
+
+    public static function deleteArticleToTags($id)
+    {
+        $db = Db::getConnection();
+
+        $sql = "DELETE FROM articleToTags WHERE article_id = :id";
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $result->execute();
+
+    }
+
 }

@@ -64,7 +64,8 @@ class AdminArticleController extends AdminBase
             $options['description'] = $_POST['description'];
             $options['analytic'] = $_POST['analytic'];
             $options['is_new'] = $_POST['is_new'];
-            $tagsArr = $_POST['tags'];
+
+            (empty($_POST['tags']) != 1) ? $tagsArr = $_POST['tags'] : $tagsArr = null;
 
             if (Article::updateArticleById($id, $options)) {
                 Tag::updateTagstoArticle($id, $tagsArr);

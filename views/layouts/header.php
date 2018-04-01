@@ -10,10 +10,6 @@
     <link rel="stylesheet" type="text/css" href="/webroot/css/carusel.css">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 
-
-
-
-
 </head>
 <div id="wrap" style="background-color: <?=Session::get('background_main')?>">
     <div id="header">
