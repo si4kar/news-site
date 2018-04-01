@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/webroot/css/styleNav.css">
     <link rel="stylesheet" type="text/css" href="/webroot/css/carusel.css">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
 
 </head>
 <div id="wrap" style="background-color: <?=Session::get('background_main')?>">
@@ -17,7 +19,8 @@
             <div class="collapse navbar-collapse navbar-brand" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-4">
                     <li class="nav-item">
-                        <input class="form-control mr-sm-2" type="text" id="searchHeader" placeholder="Search" aria-label="Search">
+                        <input class="form-control mr-sm-2" type="text" id="searchHeader" placeholder="Search" aria-label="Search" onkeyup="autocomplet()">
+                        <ul id="list_id"></ul>
 
                     </li>
 

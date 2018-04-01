@@ -197,4 +197,22 @@ class Tag
         return $articlesId;
     }
 
+    public static function getTagsListForAutocomplit()
+    {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT * FROM tags WHERE name LIKE (:keyword) ORDER BY name ASC LIMIT 0, 10';
+
+        $query = $db->prepare($sql);
+        $query->bindParam(':keyword', $keyword, PDO::PARAM_STR);
+        $query->execute();
+        $list = $query->fetchAll();
+        foreach ($list as $rs) {
+            // put in bold the written text
+            $name = str_replace($_POST['keyword'], '<b>'.$_POST['keyword'].'</b>', $rs['country_name']);
+            // add new option
+            echo '<li onclick="set_item(\''.str_replace("'", "\'", $rs['name']).'\')">'.$name.'</li>';
+        }
+    }
+
 }

@@ -11,8 +11,10 @@ class ArticleController
         $pagination = new Pagination($total, $page, Article::SHOW_BY_DEFAULT, 'page-');
         $tagsId = Tag::getTagsIdByArticleId($articleId);
         $tags = Tag::getTagsByIds($tagsId);
-
         $article = Article::getArticleById($articleId);
+
+        $categoryName = Category::getCategoryById($article['category_id']);
+
 
 
 

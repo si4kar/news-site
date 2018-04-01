@@ -20,7 +20,9 @@
                 <?php if (Session::hasFlash()) { ?>
                 <p><?=Session::flash()?></p>
                 <?php } ?>
-                <h2><?php echo $article['name']; ?></h2>
+
+                <h2>Категория <a href="/category/<?=$categoryName['id']?>"><?=$categoryName['name']?></a></h2>
+                <h2>Статья <?=$article['name']?></h2>
 
                 <img src="<?php echo Article::getImage($article['id'])?>" width="200" height="180" alt="no" />
 
@@ -48,9 +50,10 @@
                 <br/>
                 <?php /*include ROOT.'/views/comments/comments.php'; */?>
                 <div class="col-sm-5">
-                    <h3>Комментарии:</h3>
                     <?php foreach ($comments as $comment): ?>
+                        <h3>Комментарии:</h3>
                         <?php if($comment['category_id'] != 4){ ?>
+
                             <p><a href="/user/<?=$comment['user_id']?>">Автор <?=Comment::getUserById($comment['user_id'])?></a> </p>
                             <p><?=$comment['description']?></p>
                             <p><?=$comment['date']?></p>

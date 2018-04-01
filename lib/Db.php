@@ -8,7 +8,7 @@ class Db
         $dbName = Config::get('db.db_name');
 
         $db = new PDO("mysql:host={$host};dbname={$dbName}", Config::get('db.user'), Config::get('db.password'));
-
+        $db->exec("set names utf8");
         return $db;
     }
 
